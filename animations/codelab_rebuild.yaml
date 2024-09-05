@@ -708,6 +708,131 @@ steps:
           to: step_03
   - name: step_04
     steps:
+      - name: Add flip_effect.dart
+        path: quiz/lib/flip_effect.dart
+        replace-contents: |
+          import 'package:flutter/widgets.dart';
+          import 'dart:math' as math;
+
+          class CardFlipEffect extends StatefulWidget {
+            final Widget child;
+            final Duration duration;
+
+            const CardFlipEffect({
+              super.key,
+              required this.child,
+              required this.duration,
+            });
+
+            @override
+            State<CardFlipEffect> createState() => _CardFlipEffectState();
+          }
+
+          class _CardFlipEffectState extends State<CardFlipEffect>
+              with SingleTickerProviderStateMixin {
+            late final AnimationController _animationController;
+            Widget? _previousChild;
+
+            @override
+            void initState() {
+              super.initState();
+
+              _animationController = AnimationController(
+                  vsync: this, duration: widget.duration);
+
+              _animationController.addListener(() {
+                if (_animationController.value == 1) {
+                  _animationController.reset();
+                }
+              });
+            }
+
+            @override
+            void didUpdateWidget(covariant CardFlipEffect oldWidget) {
+              super.didUpdateWidget(oldWidget);
+
+              if (widget.child.key != oldWidget.child.key) {
+                _handleChildChanged(widget.child, oldWidget.child);
+              }
+            }
+
+            void _handleChildChanged(Widget newChild, Widget previousChild) {
+              _previousChild = previousChild;
+              _animationController.forward();
+            }
+
+            @override
+            Widget build(BuildContext context) {
+              return AnimatedBuilder(
+                animation: _animationController,
+                builder: (context, child) {
+                  return Transform(
+                    alignment: Alignment.center,
+                    transform: Matrix4.identity()
+                      ..rotateX(_animationController.value * math.pi),
+                    child: _animationController.isAnimating
+                        ? _animationController.value < 0.5
+                        ? _previousChild
+                        : Transform.flip(flipY: true, child: widget.child)
+                        : widget.child,
+                  );
+                },
+                child: widget.child,
+              );
+            }
+          }
+      - name: Use CardFlipEffect
+        path: quiz/lib/question_screen.dart
+        patch-u: |
+          --- a/animations/step_04/lib/question_screen.dart
+          +++ b/animations/step_04/lib/question_screen.dart
+          @@ -1,4 +1,5 @@
+           import 'package:flutter/material.dart';
+          +import 'flip_effect.dart';
+           import 'scoreboard.dart';
+           import 'view_model.dart';
+           
+          @@ -148,21 +149,25 @@ class AnswerCards extends StatelessWidget {
+                   if (correctAnswer == index) {
+                     color = Theme.of(context).colorScheme.tertiaryContainer;
+                   }
+          -        return Card.filled(
+          -          key: ValueKey(answers[index]),
+          -          color: color,
+          -          elevation: 2,
+          -          margin: EdgeInsets.all(8),
+          -          clipBehavior: Clip.hardEdge,
+          -          child: InkWell(
+          -            onTap: () => onTapped(index),
+          -            child: Padding(
+          -              padding: EdgeInsets.all(16.0),
+          -              child: Center(
+          -                child: Text(
+          -                  answers.length > index ? answers[index] : "",
+          -                  style: Theme.of(context).textTheme.titleMedium,
+          -                  overflow: TextOverflow.clip,
+          +
+          +        return CardFlipEffect(
+          +          duration: const Duration(milliseconds: 300),
+          +          child: Card.filled(
+          +            key: ValueKey(answers[index]),
+          +            color: color,
+          +            elevation: 2,
+          +            margin: const EdgeInsets.all(8),
+          +            clipBehavior: Clip.hardEdge,
+          +            child: InkWell(
+          +              onTap: () => onTapped(index),
+          +              child: Padding(
+          +                padding: const EdgeInsets.all(16.0),
+          +                child: Center(
+          +                  child: Text(
+          +                    answers.length > index ? answers[index] : "",
+          +                    style: Theme.of(context).textTheme.titleMedium,
+          +                    overflow: TextOverflow.clip,
+          +                  ),
+                           ),
+                         ),
+                       ),
       - name: Copy step_04
         copydir:
           from: quiz
