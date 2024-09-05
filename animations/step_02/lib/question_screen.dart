@@ -115,6 +115,7 @@ class AnswerCards extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GridView.count(
+      shrinkWrap: true,
       crossAxisCount: 2,
       childAspectRatio: 5 / 2,
       children: List.generate(answers.length, (index) {
