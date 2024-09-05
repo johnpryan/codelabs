@@ -663,6 +663,24 @@ steps:
                  duration: const Duration(milliseconds: 300),
                  child: Card(
                    key: ValueKey(question),
+      - name: Apply a fade effect to the transitionBuilder
+        path: quiz/lib/question_screen.dart
+        patch-u: |
+          --- a/animations/step_03/lib/question_screen.dart
+          +++ b/animations/step_03/lib/question_screen.dart
+          @@ -94,7 +94,11 @@ class QuestionCard extends StatelessWidget {
+                   final offsetAnimation =
+                       Tween<Offset>(begin: Offset(-0.1, 0.0), end: Offset.zero)
+                           .animate(curveAnimation);
+          -        return SlideTransition(position: offsetAnimation, child: child);
+          +        final fadeInAnimation = curveAnimation;
+          +        return FadeTransition(
+          +          opacity: fadeInAnimation,
+          +          child: SlideTransition(position: offsetAnimation, child: child),
+          +        );
+                 },
+                 duration: const Duration(milliseconds: 300),
+                 child: Card(
       - name: Copy step_03
         copydir:
           from: quiz
