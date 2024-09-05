@@ -32,6 +32,7 @@ class AnimatedStar extends StatelessWidget {
   final Duration _duration = const Duration(milliseconds: 1000);
   final Color _deactivatedColor = Colors.grey.shade400;
   final Color _activatedColor = Colors.yellow.shade700;
+  final Curve _curve = Curves.elasticOut;
 
   AnimatedStar({super.key, required this.isActive});
 
@@ -39,8 +40,10 @@ class AnimatedStar extends StatelessWidget {
   Widget build(BuildContext context) {
     return AnimatedScale(
       scale: isActive ? 1.0 : 0.5,
+      curve: _curve,
       duration: _duration,
       child: TweenAnimationBuilder(
+        curve: _curve,
         duration: _duration,
         tween: ColorTween(
           begin: _deactivatedColor,
