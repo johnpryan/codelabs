@@ -611,5 +611,41 @@ steps:
         copydir:
           from: quiz
           to: step_02
+  - name: step_03
+    steps:
+      - name: Use AnimatedSwitcher
+        path: quiz/lib/question_screen.dart
+        patch-u: |
+          --- a/animations/step_02/lib/question_screen.dart
+          +++ b/animations/step_02/lib/question_screen.dart
+          @@ -88,13 +88,17 @@ class QuestionCard extends StatelessWidget {
+           
+             @override
+             Widget build(BuildContext context) {
+          -    return Card(
+          -      elevation: 4,
+          -      child: Padding(
+          -        padding: EdgeInsets.all(16.0),
+          -        child: Text(
+          -          question ?? "",
+          -          style: Theme.of(context).textTheme.displaySmall,
+          +    return AnimatedSwitcher(
+          +      duration: const Duration(milliseconds: 300),
+          +      child: Card(
+          +        key: ValueKey(question),
+          +        elevation: 4,
+          +        child: Padding(
+          +          padding: const EdgeInsets.all(16.0),
+          +          child: Text(
+          +            question ?? "",
+          +            style: Theme.of(context).textTheme.displaySmall,
+          +          ),
+                   ),
+                 ),
+               );
+      - name: Copy step_03
+        copydir:
+          from: quiz
+          to: step_03
   - name: Cleanup
     rmdir: quiz
