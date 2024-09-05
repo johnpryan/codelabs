@@ -13,7 +13,6 @@ class QuestionBank {
   bool get hasNextQuestion => _questions.isNotEmpty;
   int get remainingQuestions => _questions.length;
 
-
   Question? getRandomQuestion() {
     if (_questions.isEmpty) {
       return null;

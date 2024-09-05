@@ -156,7 +156,6 @@ steps:
             bool get hasNextQuestion => _questions.isNotEmpty;
             int get remainingQuestions => _questions.length;
           
-          
             Question? getRandomQuestion() {
               if (_questions.isEmpty) {
                 return null;
@@ -332,7 +331,6 @@ steps:
             }
           }
           
-          
           class QuestionCard extends StatelessWidget {
             final String? question;
           
@@ -402,7 +400,6 @@ steps:
               );
             }
           }
-          
           
           class StatusBar extends StatelessWidget {
             final QuizViewModel viewModel;

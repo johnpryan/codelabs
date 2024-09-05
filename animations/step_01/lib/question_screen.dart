@@ -77,7 +77,6 @@ class _QuestionScreenState extends State<QuestionScreen> {
   }
 }
 
-
 class QuestionCard extends StatelessWidget {
   final String? question;
 
@@ -147,7 +146,6 @@ class AnswerCards extends StatelessWidget {
     );
   }
 }
-
 
 class StatusBar extends StatelessWidget {
   final QuizViewModel viewModel;
