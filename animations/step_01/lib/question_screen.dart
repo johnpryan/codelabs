@@ -35,16 +35,15 @@ class _QuestionScreenState extends State<QuestionScreen> {
             child: Column(
               children: [
                 QuestionCard(question: viewModel.currentQuestion?.question),
-                Expanded(
-                  child: AnswerCards(
-                    onTapped: (index) {
-                      viewModel.checkAnswer(index);
-                    },
-                    answers: viewModel.currentQuestion?.possibleAnswers ?? [],
-                    correctAnswer: viewModel.didAnswerQuestion
-                        ? viewModel.currentQuestion?.correctAnswer
-                        : null,
-                  ),
+                Spacer(),
+                AnswerCards(
+                  onTapped: (index) {
+                    viewModel.checkAnswer(index);
+                  },
+                  answers: viewModel.currentQuestion?.possibleAnswers ?? [],
+                  correctAnswer: viewModel.didAnswerQuestion
+                      ? viewModel.currentQuestion?.correctAnswer
+                      : null,
                 ),
                 StatusBar(viewModel: viewModel),
               ],
