@@ -1,0 +1,35 @@
+name: Add animation effects to your Flutter app
+steps:
+  - name: step_01
+    steps:
+      - name: Remove generated code
+        rmdir: step_01
+      - name: Create project
+        flutter: create --empty quiz
+      - name: Strip DEVELOPMENT_TEAM
+        strip-lines-containing: DEVELOPMENT_TEAM =
+        path: patterns_codelab/ios/Runner.xcodeproj/project.pbxproj
+      - name: Remove README
+        rm: quiz/README.md
+      - name: Replace pubspec.yaml
+        path: quiz/pubspec.yaml
+        replace-contents: |
+          name: quiz
+          description: A quiz app for demonstrating animation effects in Flutter
+          publish_to: "none"
+          version: 1.0.0
+
+          environment:
+            sdk: ^3.2.0
+
+          dependencies:
+            animations: ^2.0.0
+            flutter:
+              sdk: flutter
+
+          dev_dependencies:
+            flutter_test:
+              sdk: flutter
+
+          flutter:
+            uses-material-design: true
