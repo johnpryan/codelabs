@@ -706,5 +706,11 @@ steps:
         copydir:
           from: quiz
           to: step_03
+  - name: step_04
+    steps:
+      - name: Copy step_04
+        copydir:
+          from: quiz
+          to: step_04
   - name: Cleanup
     rmdir: quiz
