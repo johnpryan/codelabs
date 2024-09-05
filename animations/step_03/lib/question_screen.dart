@@ -88,6 +88,15 @@ class QuestionCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AnimatedSwitcher(
+      layoutBuilder: (Widget? currentChild, List<Widget> previousChildren) {
+        return Stack(
+          alignment: Alignment.topCenter,
+          children: <Widget>[
+            ...previousChildren,
+            if (currentChild != null) currentChild,
+          ],
+        );
+      },
       transitionBuilder: (Widget child, Animation<double> animation) {
         final curveAnimation =
             CurveTween(curve: Curves.easeInCubic).animate(animation);

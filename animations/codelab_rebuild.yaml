@@ -681,6 +681,27 @@ steps:
                  },
                  duration: const Duration(milliseconds: 300),
                  child: Card(
+      - name: Customize the layoutBuilder
+        path: quiz/lib/question_screen.dart
+        patch-u: |
+          --- a/animations/step_03/lib/question_screen.dart
+          +++ b/animations/step_03/lib/question_screen.dart
+          @@ -88,6 +88,15 @@ class QuestionCard extends StatelessWidget {
+             @override
+             Widget build(BuildContext context) {
+               return AnimatedSwitcher(
+          +      layoutBuilder: (Widget? currentChild, List<Widget> previousChildren) {
+          +        return Stack(
+          +          alignment: Alignment.topCenter,
+          +          children: <Widget>[
+          +            ...previousChildren,
+          +            if (currentChild != null) currentChild,
+          +          ],
+          +        );
+          +      },
+                 transitionBuilder: (Widget child, Animation<double> animation) {
+                   final curveAnimation =
+                       CurveTween(curve: Curves.easeInCubic).animate(animation);
       - name: Copy step_03
         copydir:
           from: quiz
