@@ -151,6 +151,7 @@ class AnswerCards extends StatelessWidget {
         }
 
         return CardFlipEffect(
+          delayAmount: index.toDouble() / 2,
           duration: const Duration(milliseconds: 300),
           child: Card.filled(
             key: ValueKey(answers[index]),
