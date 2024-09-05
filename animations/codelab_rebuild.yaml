@@ -921,5 +921,11 @@ steps:
         copydir:
           from: quiz
           to: step_04
+  - name: step_05
+    steps:
+      - name: Copy step_05
+        copydir:
+          from: quiz
+          to: step_05
   - name: Cleanup
     rmdir: quiz
