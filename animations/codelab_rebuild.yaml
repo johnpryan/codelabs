@@ -553,6 +553,35 @@ steps:
           +    );
           +  }
           +}
+      - name: Use a TweenAnimationBuilder to change the color
+        path: quiz/lib/scoreboard.dart
+        patch-u: |
+          --- a/animations/step_02/lib/scoreboard.dart
+          +++ b/animations/step_02/lib/scoreboard.dart
+          @@ -40,10 +40,19 @@ class AnimatedStar extends StatelessWidget {
+               return AnimatedScale(
+                 scale: isActive ? 1.0 : 0.5,
+                 duration: _duration,
+          -      child: Icon(
+          -        Icons.star,
+          -        size: 50,
+          -        color: isActive ? _activatedColor : _deactivatedColor,
+          +      child: TweenAnimationBuilder(
+          +        duration: _duration,
+          +        tween: ColorTween(
+          +          begin: _deactivatedColor,
+          +          end: isActive ? _activatedColor : _deactivatedColor,
+          +        ),
+          +        builder: (context, value, child) {
+          +          return Icon(
+          +            Icons.star,
+          +            size: 50,
+          +            color: value,
+          +          );
+          +        },
+                 ),
+               );
+             }
       - name: Copy step_02
         copydir:
           from: quiz
