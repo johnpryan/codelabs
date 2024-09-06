@@ -27,16 +27,8 @@ class HomeScreen extends StatelessWidget {
                 // Show the question screen to start the game
                 Navigator.push(
                   context,
-                  PageRouteBuilder(
-                      pageBuilder: (context, animation, secondaryAnimation) {
-                        return const QuestionScreen();
-                      }, transitionsBuilder:
-                      (context, animation, secondaryAnimation, child) {
-                    return FadeThroughTransition(
-                      animation: animation,
-                      secondaryAnimation: secondaryAnimation,
-                      child: child,
-                    );
+                  MaterialPageRoute(builder: (context) {
+                    return const QuestionScreen();
                   }),
                 );
               },

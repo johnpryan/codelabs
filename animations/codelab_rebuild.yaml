@@ -977,7 +977,7 @@ steps:
                                );
                              }),
       - name: Configure Predictive Back on Android
-        path: quiz/lib/home_screen.dart
+        path: quiz/lib/main.dart
         patch-u: |
           --- a/animations/step_05/lib/main.dart
           +++ b/animations/step_05/lib/main.dart
@@ -1002,6 +1002,31 @@ steps:
                  ),
                  home: HomeScreen(),
                );
+      - name: Change back to MaterialPageRoute
+        path: quiz/lib/home_screen.dart
+        patch-u: |
+          --- a/animations/step_05/lib/home_screen.dart
+          +++ b/animations/step_05/lib/home_screen.dart
+          @@ -27,16 +27,8 @@ class HomeScreen extends StatelessWidget {
+                           // Show the question screen to start the game
+                           Navigator.push(
+                             context,
+          -                  PageRouteBuilder(
+          -                      pageBuilder: (context, animation, secondaryAnimation) {
+          -                        return const QuestionScreen();
+          -                      }, transitionsBuilder:
+          -                      (context, animation, secondaryAnimation, child) {
+          -                    return FadeThroughTransition(
+          -                      animation: animation,
+          -                      secondaryAnimation: secondaryAnimation,
+          -                      child: child,
+          -                    );
+          +                  MaterialPageRoute(builder: (context) {
+          +                    return const QuestionScreen();
+                             }),
+                           );
+                         },
+
       - name: Copy step_05
         copydir:
           from: quiz
