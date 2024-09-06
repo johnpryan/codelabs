@@ -923,6 +923,37 @@ steps:
           to: step_04
   - name: step_05
     steps:
+      - name: Use PageRouteBuilder
+        path: quiz/lib/home_screen.dart
+        patch-u: |
+          --- a/animations/step_05/lib/home_screen.dart
+          +++ b/animations/step_05/lib/home_screen.dart
+          @@ -26,14 +26,19 @@ class HomeScreen extends StatelessWidget {
+                           // Show the question screen to start the game
+                           Navigator.push(
+                             context,
+          -                  MaterialPageRoute(
+          -                    builder: (BuildContext context) {
+          -                      return QuestionScreen();
+          -                    },
+          -                  ),
+          +                  PageRouteBuilder(
+          +                      pageBuilder: (context, animation, secondaryAnimation) {
+          +                        return const QuestionScreen();
+          +                      }, transitionsBuilder:
+          +                      (context, animation, secondaryAnimation, child) {
+          +                    return FadeTransition(
+          +                      opacity: animation,
+          +                      child: child,
+          +                    );
+          +                  }),
+                           );
+                         },
+          -              child: Text('New Game'),
+          +              child: const Text('New Game'),
+                       ),
+                     ],
+                   ),
       - name: Copy step_05
         copydir:
           from: quiz
