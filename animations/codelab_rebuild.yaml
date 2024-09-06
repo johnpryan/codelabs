@@ -1002,12 +1002,18 @@ steps:
                  ),
                  home: HomeScreen(),
                );
+
       - name: Change back to MaterialPageRoute
         path: quiz/lib/home_screen.dart
         patch-u: |
           --- a/animations/step_05/lib/home_screen.dart
           +++ b/animations/step_05/lib/home_screen.dart
-          @@ -27,16 +27,8 @@ class HomeScreen extends StatelessWidget {
+          @@ -1,4 +1,3 @@
+          -import 'package:animations/animations.dart';
+           import 'package:flutter/material.dart';
+           import 'question_screen.dart';
+           
+          @@ -27,16 +26,8 @@ class HomeScreen extends StatelessWidget {
                            // Show the question screen to start the game
                            Navigator.push(
                              context,
@@ -1075,6 +1081,32 @@ steps:
                  child: Card(
                    key: ValueKey(question),
                    elevation: 4,
+      - name: dart analyze
+        path: quiz
+        dart: analyze --fatal-infos
+      - name: Build Android app
+        platforms: [ macos ]
+        path: quiz
+        flutter: build apk
+      - name: Build iOS app
+        platforms: [ macos ]
+        path: quiz
+        flutter: build ios --simulator
+      - name: Build macOS app
+        platforms: [ macos ]
+        path: quiz
+        flutter: build macos
+      - name: Build Linux app
+        platforms: [ linux ]
+        path: quiz
+        flutter: build linux
+      - name: Build Windows app
+        platforms: [ windows ]
+        path: quiz
+        flutter: build windows
+      - name: Build Web app
+        path: quiz
+        flutter: build web
       - name: Copy step_05
         copydir:
           from: quiz
